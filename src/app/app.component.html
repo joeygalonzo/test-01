@@ -1,0 +1,32 @@
+<form *ngIf="searchTextForm" [formGroup]="searchTextForm" >
+  <div class="form-container ">
+    <mat-card class="card-container">
+      <mat-card-header fxLayout="column">
+        <h1>{{title}}</h1>      
+      </mat-card-header>    
+      <mat-card-content>
+         <div fxLayout="column" fxLayoutGap="25px">
+            <mat-form-field hintLabel="Maximum 600 characters" appearance="fill">
+              <mat-label>Enter here the main text</mat-label>
+              <textarea matInput formControlName="main_text" #mainText maxlength="600" placeholder="Ex. the quick brown fox jumps over the lazy dog."></textarea>
+              <mat-hint align="end">{{mainText.value?.length || 0}}/600</mat-hint>
+              <mat-error *ngIf="searchTextForm.get('main_text').invalid">{{getErrorMessage('main_text')}}</mat-error>
+            </mat-form-field>
+            <mat-form-field hintLabel="Maximum 100 characters" appearance="fill">
+              <mat-label>Enter here the word to be searched</mat-label>
+              <input matInput formControlName="sub_text" #subtext maxlength="100" placeholder="Ex. the quick brown fox.">
+              <mat-hint align="end">{{subtext.value?.length || 0}}/100</mat-hint>
+              <mat-error *ngIf="searchTextForm.get('sub_text').invalid">{{getErrorMessage('sub_text')}}</mat-error>
+            </mat-form-field>           
+         </div>
+      </mat-card-content>
+      <div fxLayoutAlign="center center">
+        <button id="btnSubmit" type="button" [disabled]="searchTextForm.invalid" (click)="onClickSubmit()" mat-raised-button color="accent">SUBMIT</button>
+      </div>
+      <div fxLayout="column" class="result-container" fxLayoutGap="25px">
+        <span id="resultLabel" class="result">Result:</span>
+        <span id="positionList" class="result">{{textPositionsDisplay}}</span>
+      </div>
+   </mat-card>
+  </div>
+</form>
